@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fridge to Fork</title>
+  <meta name="description" content="Add the ingredients you have and get three recipes written by AI.">
+  <link rel="preload" href="/fonts/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <p class="brand">Fridge to Fork</p>
+      <h1>What's in your fridge?</h1>
+      <p class="lede">Add what you have. AI suggests three recipes that use it, and tells you anything extra you'd need to buy.</p>
+    </header>
+
+    <form id="recipe-form" class="pantry" novalidate>
+      <label for="ingredient-input" class="field-label">Your ingredients</label>
+      <div class="add-row">
+        <input id="ingredient-input" type="text" autocomplete="off" maxlength="40"
+               placeholder="e.g. eggs, spinach, feta" aria-describedby="ingredient-hint">
+        <button type="button" id="add-btn" class="btn btn-quiet">Add</button>
+      </div>
+      <p id="ingredient-hint" class="hint">Press Enter after each one, or paste a list separated by commas. Up to 20.</p>
+
+      <ul id="chips" class="chips" aria-label="Added ingredients"></ul>
+      <p id="chips-empty" class="chips-empty">Nothing added yet.</p>
+
+      <div class="chip-actions">
+        <button type="button" id="example-btn" class="link-btn">Try an example</button>
+        <button type="button" id="clear-btn" class="link-btn">Clear all</button>
+      </div>
+
+      <fieldset class="options">
+        <legend class="sr-only">Recipe options</legend>
+        <div class="option">
+          <label for="diet">Diet</label>
+          <select id="diet">
+            <option value="none">No preference</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="gluten-free">Gluten-free</option>
+            <option value="dairy-free">Dairy-free</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="max-time">Time to cook</label>
+          <select id="max-time">
+            <option value="15">15 minutes</option>
+            <option value="30" selected>30 minutes</option>
+            <option value="45">45 minutes</option>
+            <option value="60">An hour or more</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="servings">Servings</label>
+          <select id="servings">
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <button type="submit" id="submit-btn" class="btn btn-primary">Find recipes</button>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </form>
+
+    <section id="results" class="results" aria-label="Recipes" hidden></section>
+
+    <footer class="footnote">
+      <p>Recipes are written by <span id="ai-name">an AI model</span> and can be wrong. Check every ingredient for allergies, cook meat, eggs and fish to safe temperatures, and use your own judgment.</p>
+      <p>Your ingredients are sent to the AI only to write these recipes, and this app stores nothing. <span id="free-tier-note" hidden>This app uses Gemini's free tier, so Google may use what you send to improve its products. Don't type personal information.</span></p>
+    </footer>
+  </main>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="card-head">
+        <h2 class="card-title"></h2>
+        <p class="card-meta"></p>
+      </div>
+      <div class="card-body">
+        <p class="card-desc"></p>
+        <h3>Uses</h3>
+        <p class="card-uses"></p>
+        <h3 class="card-extra-label">You'll also need</h3>
+        <p class="card-extra"></p>
+        <h3>Steps</h3>
+        <ol class="card-steps"></ol>
+        <p class="card-allergens"></p>
+        <p class="card-tip"></p>
+        <button type="button" class="btn btn-quiet copy-btn">Copy recipe</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>
